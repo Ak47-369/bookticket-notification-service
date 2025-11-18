@@ -41,10 +41,10 @@ public class HeaderPropagationInterceptor implements ClientHttpRequestIntercepto
 
         // Add headers to the outgoing request
         if (userId != null) {
-            request.getHeaders().add("X-User-Id", userId);
+            request.getHeaders().set("X-User-Id", userId);
         }
 
-        request.getHeaders().add("X-User-Roles", userRoles);
+        request.getHeaders().set("X-User-Roles", userRoles);
 
         return execution.execute(request, body);
     }
