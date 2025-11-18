@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Failed</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px;">
+        <tr>
+            <td align="center">
+                <!-- Main Container -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px 30px; text-align: center;">
+                            <div style="background-color: rgba(255,255,255,0.2); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 48px;">😔</span>
+                            </div>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Booking Unsuccessful</h1>
+                            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">We couldn't complete your booking</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <p style="margin: 0 0 20px 0; color: #212529; font-size: 16px; line-height: 1.6;">
+                                Hi <span th:text="${userName}">there</span>,
+                            </p>
+                            <p style="margin: 0 0 20px 0; color: #212529; font-size: 16px; line-height: 1.6;">
+                                We're sorry to inform you that your booking attempt was unsuccessful.
+                            </p>
+                            
+                            <!-- Booking ID -->
+                            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
+                                <p style="margin: 0 0 8px 0; color: #6c757d; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Booking Reference</p>
+                                <p style="margin: 0; color: #212529; font-size: 20px; font-weight: 700; font-family: 'Courier New', monospace;" th:text="'#' + ${bookingId}">#N/A</p>
+                            </div>
+                            
+                            <!-- Reason -->
+                            <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; border-radius: 4px; margin-bottom: 25px;">
+                                <p style="margin: 0 0 10px 0; color: #856404; font-weight: 600; font-size: 14px;">❌ Reason for Failure</p>
+                                <p style="margin: 0; color: #856404; font-size: 15px; line-height: 1.5;" th:text="${reason}">Unknown error occurred</p>
+                            </div>
+                            
+                            <!-- What's Next -->
+                            <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 20px; border-radius: 4px; margin-bottom: 25px;">
+                                <p style="margin: 0 0 15px 0; color: #0d47a1; font-weight: 600; font-size: 14px;">💡 What You Can Do</p>
+                                <ul style="margin: 0; padding-left: 20px; color: #0d47a1; font-size: 14px; line-height: 1.8;">
+                                    <li>Check your payment method and try again</li>
+                                    <li>Ensure you have sufficient balance</li>
+                                    <li>Try selecting different seats if they were unavailable</li>
+                                    <li>Contact our support team if the issue persists</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- CTA Buttons -->
+                            <div style="text-align: center; margin-top: 30px;">
+                                <a href="#" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 15px 40px; border-radius: 50px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); margin: 0 10px 10px 0;">Try Again</a>
+                                <a href="#" style="display: inline-block; background-color: #ffffff; color: #667eea; text-decoration: none; padding: 15px 40px; border-radius: 50px; font-weight: 600; font-size: 16px; border: 2px solid #667eea; margin: 0 10px 10px 0;">Browse Movies</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #212529; padding: 30px; text-align: center;">
+                            <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 18px; font-weight: 600;">We're Here to Help! 🎬</p>
+                            <p style="margin: 0 0 20px 0; color: #adb5bd; font-size: 14px;">Don't worry, you can try booking again anytime</p>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #495057;">
+                                <p style="margin: 0; color: #6c757d; font-size: 12px;">
+                                    Need assistance? Contact us at <a href="mailto:support@bookticket.com" style="color: #667eea; text-decoration: none;">support@bookticket.com</a>
+                                </p>
+                                <p style="margin: 10px 0 0 0; color: #6c757d; font-size: 12px;">
+                                    Or call us at <a href="tel:+911234567890" style="color: #667eea; text-decoration: none;">+91 123 456 7890</a>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

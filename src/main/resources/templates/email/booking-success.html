@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px;">
+        <tr>
+            <td align="center">
+                <!-- Main Container -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center;">
+                            <div style="background-color: rgba(255,255,255,0.2); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 48px;">🎉</span>
+                            </div>
+                            <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 700;">Booking Confirmed!</h1>
+                            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Your tickets are ready</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Booking ID -->
+                    <tr>
+                        <td style="padding: 30px; background-color: #f8f9fa; text-align: center;">
+                            <p style="margin: 0 0 8px 0; color: #6c757d; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Booking ID</p>
+                            <p style="margin: 0; color: #212529; font-size: 24px; font-weight: 700; font-family: 'Courier New', monospace;" th:text="'#' + ${bookingId}">#12345</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Movie Details -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 8px; margin-bottom: 25px;">
+                                <h2 style="color: #ffffff; margin: 0 0 15px 0; font-size: 28px; font-weight: 700;" th:text="${movieTitle}">Movie Title</h2>
+                                <div style="margin-bottom: 10px;">
+                                    <span style="color: rgba(255,255,255,0.9); font-size: 16px;" th:text="'📅 ' + ${showDate}">📅 Date</span>
+                                </div>
+                                <div>
+                                    <span style="color: rgba(255,255,255,0.9); font-size: 16px;" th:text="'🕐 ' + ${showTime}">🕐 Time</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Theater Details -->
+                            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                                <h3 style="color: #212529; margin: 0 0 15px 0; font-size: 18px; font-weight: 600;">🎭 Theater Details</h3>
+                                <p style="margin: 0 0 8px 0; color: #495057; font-size: 16px; font-weight: 600;" th:text="${theaterName}">Theater Name</p>
+                                <p style="margin: 0 0 8px 0; color: #6c757d; font-size: 14px;" th:text="${theaterAddress}">Theater Address</p>
+                                <p style="margin: 0; color: #6c757d; font-size: 14px;">Screen: <strong th:text="${screenName}">Screen Name</strong></p>
+                            </div>
+                            
+                            <!-- Seat Details -->
+                            <div style="margin-bottom: 25px;">
+                                <h3 style="color: #212529; margin: 0 0 15px 0; font-size: 18px; font-weight: 600;">🎫 Your Seats</h3>
+                                <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+                                    <thead>
+                                        <tr style="background-color: #667eea;">
+                                            <th style="padding: 12px; text-align: left; color: #ffffff; font-weight: 600;">Seat</th>
+                                            <th style="padding: 12px; text-align: left; color: #ffffff; font-weight: 600;">Type</th>
+                                            <th style="padding: 12px; text-align: right; color: #ffffff; font-weight: 600;">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="seat : ${seats}">
+                                            <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;" th:text="${seat.seatNumber}">A1</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;" th:text="${seat.seatType}">Premium</td>
+                                            <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;" th:text="'₹' + ${#numbers.formatDecimal(seat.price, 1, 2)}">₹350.00</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background-color: #f8f9fa;">
+                                            <td colspan="2" style="padding: 15px; font-weight: 700; font-size: 16px; color: #212529;">Total Amount</td>
+                                            <td style="padding: 15px; text-align: right; font-weight: 700; font-size: 18px; color: #667eea;" th:text="'₹' + ${#numbers.formatDecimal(totalAmount, 1, 2)}">₹700.00</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            
+                            <!-- Important Info -->
+                            <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
+                                <p style="margin: 0 0 10px 0; color: #856404; font-weight: 600; font-size: 14px;">⚠️ Important Information</p>
+                                <ul style="margin: 0; padding-left: 20px; color: #856404; font-size: 13px;">
+                                    <li>Please arrive 15 minutes before showtime</li>
+                                    <li>Carry a valid ID proof for verification</li>
+                                    <li>Your ticket PDF is attached to this email</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <div style="text-align: center; margin-top: 30px;">
+                                <a href="#" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 15px 40px; border-radius: 50px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">View Booking Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #212529; padding: 30px; text-align: center;">
+                            <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 18px; font-weight: 600;">Enjoy Your Movie! 🍿</p>
+                            <p style="margin: 0 0 20px 0; color: #adb5bd; font-size: 14px;">Thank you for choosing BookTicket</p>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #495057;">
+                                <p style="margin: 0; color: #6c757d; font-size: 12px;">
+                                    Need help? Contact us at <a href="mailto:support@bookticket.com" style="color: #667eea; text-decoration: none;">support@bookticket.com</a>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

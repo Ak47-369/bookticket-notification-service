@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: notification-service
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+      fail-on-null-for-primitives: false
+  security:
+    filter:
+      dispatcher-types: async, error, forward, include, request
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER_ADDRESS}
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${KAFKA_USERNAME}" password="${KAFKA_PASSWORD}";
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*"
+        session.timeout.ms: 45000
+        spring.json.type.mapping: com.bookticket.booking_service.dto.BookingSuccessEvent:com.bookticket.notification_service.dto.BookingSuccessEvent,com.bookticket.booking_service.dto.BookingFailedEvent:com.bookticket.notification_service.dto.BookingFailedEvent
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  cloud:
+    config:
+      enabled: false
+server:
+  port: 8086
+logging:
+  level:
+    org.springframework.notification_service: DEBUG
+management:
+  server:
+    port: 9096
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+services:
+  booking-url: "lb://booking-service"
+  theater-url: "lb://theater-service"
+  user-url: "lb://user-service"
