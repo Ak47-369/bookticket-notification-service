@@ -5,6 +5,19 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
       fail-on-null-for-primitives: false
+  datasource:
+    url: jdbc:postgresql://${NEON_HOST}/${NEON_DB}?sslmode=require&channelBinding=require
+    username: ${NEON_USER}
+    password: ${NEON_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
   security:
     filter:
       dispatcher-types: async, error, forward, include, request
