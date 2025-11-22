@@ -26,6 +26,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("v3/api-docs/**").permitAll()
                         .requestMatchers("/api/v1/internal/notifications/**").hasRole("SERVICE_ACCOUNT")
                         .requestMatchers("/api/v1/admin/notification-dlq/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
