@@ -16,12 +16,14 @@ public class HeaderPropagationInterceptor implements ClientHttpRequestIntercepto
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         String userId = null;
         String userRoles = null;
+        String username = null;
 
         // Try to get from HTTP request context (for regular HTTP requests)
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
             userId = attributes.getRequest().getHeader("X-User-Id");
             userRoles = attributes.getRequest().getHeader("X-User-Roles");
+            username = attributes.getRequest().getHeader("X-User-Name");
         }
 
         // If not available from HTTP context, try UserContext (for Kafka events)
@@ -45,6 +47,9 @@ public class HeaderPropagationInterceptor implements ClientHttpRequestIntercepto
         }
 
         request.getHeaders().set("X-User-Roles", userRoles);
+        if (username != null) {
+            request.getHeaders().set("X-User-Name", username);
+        }
 
         return execution.execute(request, body);
     }

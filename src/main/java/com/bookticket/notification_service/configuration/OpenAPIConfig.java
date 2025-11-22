@@ -1,5 +1,6 @@
 package com.bookticket.notification_service.configuration;
 
+import com.bookticket.notification_service.configuration.swagger.InternalApi;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -8,9 +9,11 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.HandlerMethod;
 
 @Configuration
 public class OpenAPIConfig {
@@ -42,6 +45,18 @@ public class OpenAPIConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme(SCHEME)
                                         .bearerFormat(BEARER_FORMAT)));
+    }
+
+    @Bean
+    public OperationCustomizer internalApiCustomizer() {
+        return (operation, handlerMethod) -> {
+            InternalApi internalApi = handlerMethod.getMethodAnnotation(InternalApi.class);
+            if (internalApi != null) {
+                operation.addExtension("x-try-it-out-enabled", false);
+                operation.setSummary(operation.getSummary() + " (Internal API)");
+            }
+            return operation;
+        };
     }
 
     private Info apiInfo() {
