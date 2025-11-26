@@ -12,7 +12,7 @@ The **Notification Service** is an asynchronous, event-driven microservice respo
 -   **Resilient Error Handling:** Implements a robust retry and Dead Letter Queue (DLQ) mechanism to ensure that failed notifications are never lost and can be reprocessed.
 
 ## Architecture & Asynchronous Flow
-<img width="800" height="1000" alt="NotificationService" src="https://github.com/user-attachments/assets/d059ade6-e910-4c68-bc47-e2083ce5e98d" />
+<img width="800" height="1000" alt="Notification-Service" src="https://github.com/user-attachments/assets/0f0fa5c3-205d-44a6-8991-e67a2eea58ca" />
 
 
 ### How It Works
@@ -39,3 +39,20 @@ The service is configured via properties from the **Config Server**. Key propert
 -   `brevo.api.key`: The API key for authenticating with the Brevo service.
 -   `spring.mail.username`: The "from" address used in outgoing emails.
 -   `management.health.mail.enabled: false`: Disables the default mail health check to prevent timeouts in a cloud environment.
+
+## API Endpoints
+
+This service is primarily event-driven and does not expose public endpoints for creating notifications. However, it does expose administrative endpoints for observability and management of the Dead Letter Queue (DLQ).
+
+## API Endpoints
+
+This service is primarily event-driven and does not expose public endpoints for creating notifications. However, it does expose administrative endpoints for observability and management of the Dead Letter Queue (DLQ).
+
+### Admin-Only DLQ Endpoints
+These endpoints are exposed through the API Gateway and require the `ADMIN` role for access. They are crucial for monitoring and managing the health of the notification system.
+
+-   `GET /api/v1/admin/notification-dlq/pending`: Retrieves a list of all notifications in the DLQ that are currently in `PENDING` status, awaiting an automatic retry from the scheduled job.
+-   `GET /api/v1/admin/notification-dlq/failed`: Retrieves a list of notifications that have exhausted all retry attempts and are now in a terminal `FAILED` state, requiring manual investigation.
+-   `POST /api/v1/admin/notification-dlq/{notificationId}/mark-processed`: An administrative action to manually mark a failed notification as `PROCESSED`. This is used to clear an item from the queue after the issue has been handled externally (e.g., the email was sent manually).
+-   `GET /api/v1/admin/notification-dlq/stats`: Provides high-level statistics for the DLQ, including the total counts of pending and failed notifications.
+-   `GET /api/v1/admin/notification-dlq/booking/{bookingId}`: Fetches a detailed list and status summary of all failed notifications associated with a specific booking ID. This is very useful for debugging a specific user's issue.
