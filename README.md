@@ -12,7 +12,8 @@ The **Notification Service** is an asynchronous, event-driven microservice respo
 -   **Resilient Error Handling:** Implements a robust retry and Dead Letter Queue (DLQ) mechanism to ensure that failed notifications are never lost and can be reprocessed.
 
 ## Architecture & Asynchronous Flow
-<img width="800" height="1000" alt="Notification-Service" src="https://github.com/user-attachments/assets/0f0fa5c3-205d-44a6-8991-e67a2eea58ca" />
+<img width="800" height="1000" alt="Notification-Service" src="https://github.com/user-attachments/assets/a352ed91-4834-425f-9050-481b4e0af9df" />
+
 
 
 ### How It Works
